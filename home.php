@@ -1,157 +1,14 @@
 <html>
 	<head>
 		<title></title>
-		<!--<link rel="stylesheet" href="test.css" />-->
-		<style>
-			*
-			{
-				background-color: aquamarine;
-			}
-			
-			.content
-			{
-				display: none;
-				overflow: hidden;
-			}
-
-			div
-			{
-				width: 48vw;
-				height: 90vh;
-				background-color: white;
-			}
-
-			#top
-			{
-				height: 20px;
-				background-color: aquamarine;
-			}
-
-			button
-			{
-				background-color: whitesmoke;
-			}
-
-			form
-			{
-				float: right;
-				padding-right: 30vw;
-			}
-
-			input
-			{
-				background-color: white;
-			}
-
-			#left
-			{
-				float: left;
-				border: 2px solid black;
-				overflow: scroll;
-			}
-
-			#right
-			{
-				float: right;
-				border: 2px solid black;
-			}
-
-			.table
-			{
-				display: table;
-				height: 2vh;
-				background-color: darkturquoise;
-			}
-
-			p
-			{
-				display: inline;
-				padding: 0 10% 0 10%;
-				background-color: darkturquoise;
-			}
-
-			.tab-content
-			{
-				display: none;
-				height: 86vh;
-			}
-
-			.tab-content:target
-			{
-				display: block;
-				overflow-x: auto;
-			}
-
-			p>a
-			{
-				background-color: darkturquoise;
-			}
-
-			a:link
-			{
-				text-decoration: none;
-			}
-
-			a:visited
-			{
-				text-decoration: none;
-			}
-
-			a:hover
-			{
-				text-decoration: none;
-			}
-
-			a:active
-			{
-				text-decoration: none;
-			}
-		</style>
+		<link rel="stylesheet" href="zross/css/home.css" />
+		<link rel="icon" type="image/x-icon" href="zross/favicon.ico">
+		
 		<?php
 			require 'vendor/autoload.php';
 
-			$hosts = 
-				[
-				'localhost:9200',
-				'127.0.0.1',
-				'127.0.0.1:9200',
-				'localhost'
-				];
-		
-			$url = "curl -XPUT --header 'Content-Type: application/json' http://localhost:9200/articles/_doc/1 -d 
-			'{
-				'title' => 'Test 1',
-				'url' => 'testurl',
-				'content' => 'lorem ipsum'
-			}'";
-			error_reporting(-1);
-			$getIndex = "localhost:9200/articles?pretty";
-			$ch = curl_init();
-			$timeout = 50;
-			curl_setopt($ch, CURLOPT_URL, $getIndex);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-			curl_setopt($ch, CURLINFO_HEADER_OUT, true);
-			curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/534.16 (KHTML, like Gecko) Chrome/10.0.648.204 Safari/534.16");
-			$request = curl_exec($ch);
-			$info = curl_getinfo($ch);
-			curl_close($ch);
-		
-			var_dump(curl_error($ch));
-		
-			print_r($info);
-			var_dump($request);
-
-			$params = 
-				['index' => 'articles',
-				 'id' => '01',
-				 'body' =>
-				 	[
-					'title' => 'Test 1',
-					'url' => 'testurl',
-					'content' => 'lorem ipsum'
-					]
-				 ];
+			$settings = array('host' => '', 'port' => 8080);
+			$elasticaClient = new \Elastica\Client(); //use settings if needed
 		?>
 	</head>
 	<body>
@@ -355,6 +212,7 @@
             This is where we survey you.
             </div>
 		</div>
+		<footer>Powered by Apache2, MySQL, and PHP 8.</footer>
 	</body>
 	<script>
 		var coll = document.getElementsByClassName("collapsible");

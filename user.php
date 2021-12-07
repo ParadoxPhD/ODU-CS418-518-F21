@@ -5,7 +5,7 @@
 <html>
 	<head>
 		<title></title>
-		<!--<link rel="stylesheet" href="user.css">-->
+		<link rel="stylesheet" href="zross/user.css">
 		<style>
 			*
 			{
@@ -90,6 +90,7 @@
 				text-decoration: none;
 			}
 		</style>
+		<link rel="icon" type="image/x-icon" href="zross/favicon.ico">
 		<?php
 			if(array_key_exists('pswd_submit', $_POST))
 			{
@@ -195,7 +196,8 @@
 	</head>
 	<body>
         <div id="top">
-            <button>Register/Login</button>
+            <button><a href="login.php">Register/Login</a></button>
+			<button><a href="user.php">User Account</a></button>
             <form action="search.php">
                 <button>Search</button>
                 <input type="text" id="search" name="search">
@@ -211,5 +213,6 @@
 				<input type="submit" name="logout" class="button" value="Log Out" />
             </form>
 		</div>
+		<footer>Powered by Apache2, MySQL, and PHP 8.</footer>
 	</body>
 </html>

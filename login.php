@@ -5,90 +5,9 @@ session_start();
 <html>
 	<head>
 		<title></title>
-		<style>
-			*
-			{
-				background-color: aquamarine;
-			}
-
-			div
-			{
-				width: 47vw;
-				height: 90vh;
-				background-color: white;
-			}
-
-			#top
-			{
-				height: 20px;
-				background-color: aquamarine;
-				padding-bottom: 1vh;
-			}
-
-			button
-			{
-				background-color: whitesmoke;
-			}
-
-			input
-			{
-				background-color: white;
-			}
-
-			form
-			{
-				float: right;
-				padding-right: 30vw;
-			}
-
-			form#info
-			{
-				background-color: white;
-			}
-
-			form#info>button, form#info>input
-			{
-				margin-bottom: 1vh;
-			}
-
-			.table
-			{
-				display: table;
-				margin: 0 auto;
-				height: 4vh;
-			}
-
-			.tab-content
-			{
-				display: none;
-				height: 86vh;
-			}
-
-			.tab-content:target
-			{
-				display: block;
-			}
-
-			a:link
-			{
-				text-decoration: none;
-			}
-
-			a:visited
-			{
-				text-decoration: none;
-			}
-
-			a:hover
-			{
-				text-decoration: none;
-			}
-
-			a:active
-			{
-				text-decoration: none;
-			}
-		</style>
+		<link rel="stylesheet" href="zross/css/home.css" />
+		<link rel="icon" type="image/x-icon" href="zross/favicon.ico">
+		<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 		<?php
 		use PHPMailer\PHPMailer\PHPMailer;
 		use PHPMailer\PHPMailer\SMTP;
@@ -128,6 +47,33 @@ session_start();
 			$_SESSION["email"] = $_POST["pswd_change_email"];
 			$email = $_POST["pswd_change_email"];
 			sendMail($email, 'Change Password', "http://localhost:8000/resetpswd.php");
+		}
+		
+		if(array_key_exists('recaptcha', $_POST))
+		{
+			$recaptcha = $_POST['g-recaptcha-response'];
+			$res = reCaptcha($recaptcha);
+			if(!$res['success']){
+			  echo '<script>alert("Recaptcha failed.")</script>';
+			}
+			//on success allow login/register
+		}
+		
+		function reCaptcha($recaptcha){
+		  $secret = "6LcQI34dAAAAAD_7HzeI1EwSeXYMQ-9AR-o-uURu";
+		  $ip = $_SERVER['REMOTE_ADDR'];
+
+		  $postvars = array("secret"=>$secret, "response"=>$recaptcha, "remoteip"=>$ip);
+		  $url = "https://www.google.com/recaptcha/api/siteverify";
+		  $ch = curl_init();
+		  curl_setopt($ch, CURLOPT_URL, $url);
+		  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		  curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+		  curl_setopt($ch, CURLOPT_POSTFIELDS, $postvars);
+		  $data = curl_exec($ch);
+		  curl_close($ch);
+
+		  return json_decode($data, true);
 		}
 		
 		function login($conn)
@@ -262,7 +208,8 @@ session_start();
 	</head>
 	<body>
         <div id="top">
-            <button>Register/Login</button>
+            <button><a href="login.php">Register/Login</a></button>
+			<button><a href="user.php">User Account</a></button>
             <form action="/search.php">
                 <button>Search</button>
                 <input type="text" id="search" name="search">
@@ -280,6 +227,11 @@ session_start();
 				<input type="text" name="pswd_change_email" />
 				<input type="submit" name="change" class="button" value="Change Password" />
             </form>
+			<form action="?" method="POST">
+			  <div class="g-recaptcha" data-sitekey="6LcQI34dAAAAAOgFhVvI24JfR0DD8EG5g1ZveYyV"></div>
+			  <input type="submit" name="recaptcha" value="Submit">
+			</form>
 		</div>
+		<footer>Powered by Apache2, MySQL, and PHP 8.</footer>
 	</body>
 </html>
