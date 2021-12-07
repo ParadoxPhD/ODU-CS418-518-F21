@@ -60,7 +60,7 @@ session_start();
 		}
 		
 		function reCaptcha($recaptcha){
-		  $secret = "6LcQI34dAAAAAD_7HzeI1EwSeXYMQ-9AR-o-uURu";
+		  $secret = "***";
 		  $ip = $_SERVER['REMOTE_ADDR'];
 
 		  $postvars = array("secret"=>$secret, "response"=>$recaptcha, "remoteip"=>$ip);
@@ -228,7 +228,7 @@ session_start();
 				<input type="submit" name="change" class="button" value="Change Password" />
             </form>
 			<form action="?" method="POST">
-			  <div class="g-recaptcha" data-sitekey="6LcQI34dAAAAAOgFhVvI24JfR0DD8EG5g1ZveYyV"></div>
+			  <div class="g-recaptcha" data-sitekey="***"></div>
 			  <input type="submit" name="recaptcha" value="Submit">
 			</form>
 		</div>
